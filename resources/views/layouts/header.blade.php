@@ -9,6 +9,8 @@
             <nav>
                 <ul class="metismenu" id="menu">
                     <li><a href="#"><i class="ti-home"></i> <span>Inicio</span></a></li>
+                    <li><a href="#"><i class="ti-home"></i> <span>Inicio</span></a></li>
+                    <li><a href="#"><i class="ti-home"></i> <span>Inicio</span></a></li>
                 </ul>
             </nav>
         </div>
