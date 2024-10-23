@@ -9,40 +9,26 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    // Especificar la tabla que usará este modelo
+    protected $table = 'usuario';
+
+    // Especificar la clave primaria de la tabla
+    protected $primaryKey = 'ID_USUARIO';
+
+    // Los campos que pueden ser llenados de forma masiva
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'NOMBRE_USUARIO',
+        'APELLIDO_USUARIO',
+        'USER_USUARIO',
+        'CLAVE_USUARIO',
+        'ID_ROL',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Relación con la tabla 'roles'
+    public function rol()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsTo(Rol::class, 'ID_ROL');
     }
 }
