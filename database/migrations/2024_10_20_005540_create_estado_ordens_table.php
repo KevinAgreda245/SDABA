@@ -17,13 +17,13 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Insertar los estados por defecto
-        DB::table('ESTADO_ORDEN')->insert([
-            ['ESTADO_ORDEN' => 'Autorizada'],
-            ['ESTADO_ORDEN' => 'Denegada'],
-            ['ESTADO_ORDEN' => 'Pendiente'],
-            ['ESTADO_ORDEN' => 'Registrada'],
-        ]);
+        // // Insertar los estados por defecto
+        // DB::table('ESTADO_ORDEN')->insert([
+        //     ['ESTADO_ORDEN' => 'Autorizada'],
+        //     ['ESTADO_ORDEN' => 'Denegada'],
+        //     ['ESTADO_ORDEN' => 'Pendiente'],
+        //     ['ESTADO_ORDEN' => 'Registrada'],
+        // ]);
     }
 
     /**
