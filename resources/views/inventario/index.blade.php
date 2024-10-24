@@ -43,7 +43,7 @@
                                         <td>
                                            
                                             <a href=""
-                                                class="btn btn-primary btn-xs"> Agregar pedido
+                                                class="btn btn-primary btn-xs"> Solicitar pedido pedido
                         
                                             </a>
 
