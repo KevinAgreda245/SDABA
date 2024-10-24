@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('COSTO_INVENTARIO', 10, 2); // Decimal
             $table->unsignedBigInteger('ID_PRODUCTO'); // Foreign Key
             $table->string('USUARIO_INVENTARIO'); // String
+            $table->boolean('ESTADO_ACTIVO_INVENTARIO');
             $table->timestamps();
     
             $table->foreign('ID_PRODUCTO')->references('ID_PRODUCTO')->on('producto')->onDelete('cascade');
