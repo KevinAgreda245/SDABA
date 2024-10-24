@@ -42,6 +42,12 @@
                                         <td>{{ $inventario->created_at; }}</td>
                                         <td>
                                            
+                                            <a href=""
+                                                class="btn btn-primary btn-xs"> Agregar pedido
+                        
+                                            </a>
+
+
                                         </td>
                                     </tr>
                                 @endforeach
