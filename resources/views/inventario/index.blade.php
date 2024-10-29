@@ -39,12 +39,11 @@
                                         <td>{{ $inventario->producto->NOMBRE_PRODUCTO }}</td>
                                         <td>{{ $inventario->CANTIDAD_INVENTARIO }}</td>
                                         <td>{{ $inventario->producto->tipoProducto->NOMBRE_TIPO_PRODUCTO }}</td>
-                                        <td>{{ $inventario->created_at; }}</td>
+                                        <td>{{ $inventario->created_at }}</td>
                                         <td>
-                                           
-                                            <a href=""
-                                                class="btn btn-primary btn-xs"> Solicitar pedido pedido
-                        
+
+                                            <a href="{{ route('ordenProducto.create', $inventario->producto) }}" class="btn btn-primary btn-xs"> Solicitar pedido pedido
+
                                             </a>
 
 
