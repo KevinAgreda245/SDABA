@@ -14,3 +14,4 @@ Route::get('/main', [MainController::class, 'index'])->name('main');
 Route::resource('tipoProducto', TipoProductoController::class);
 Route::resource('inventario', InventarioController::class);
 Route::resource('ordenProducto', OrdenProductoController::class);
+Route::resource('producto', ProductoController::class);
