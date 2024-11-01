@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('CANTIDAD_PRODUCTO'); // Cantidad del producto
             $table->decimal('COSTO_PRODUCTO', 10, 2); // Costo del producto
             $table->decimal('PRECIO_PRODUCTO', 10, 2); // Precio del producto
-            $table->string('USUARIO_ORDEN_COMPRA'); // Usuario que gestiona la orden
+            $table->string('USUARIO_ORDEN_COMPRA')->nullable(); // Usuario que gestiona la orden
             $table->timestamps();
 
             // Definir claves foráneas

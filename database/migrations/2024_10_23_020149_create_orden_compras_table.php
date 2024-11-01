@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id('ID_ORDEN_COMPRA'); // Serial (primary key)
             $table->date('FECHA_COMPRA'); // Fecha de la compra
             $table->unsignedBigInteger('ID_ESTADO_ORDEN'); // Foreign key hacia estado_orden
-            $table->unsignedBigInteger('ID_PROVEEDOR'); // Foreign key hacia proveedor
+            $table->unsignedBigInteger('ID_PROVEEDOR') ->nullable(); // Foreign key hacia proveedor
             $table->date('FECHA_ENTREGA')->nullable(); // Fecha de entrega (opcional)
-            $table->string('USUARIO_ORDEN_COMPRA'); // Usuario que realizó la compra
+            $table->string('USUARIO_ORDEN_COMPRA')->nullable(); // Usuario que realizó la compra
             $table->timestamps();
 
             // Definir claves foráneas

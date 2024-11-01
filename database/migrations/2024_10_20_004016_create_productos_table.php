@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('DESCRIPCION_PRODUCTO')->nullable(); // Descripción del producto
             $table->integer('MINIMO_PRODUCTO'); // Mínimo de producto
             $table->unsignedBigInteger('ID_TIPO_PRODUCTO'); // Foreign key
-            $table->string('USUARIO_PRODUCTO'); // Usuario relacionado
+            $table->string('USUARIO_PRODUCTO')->nullable(); // Usuario relacionado
             $table->timestamps(); // Fechas de creación y actualización
 
             $table->foreign('ID_TIPO_PRODUCTO')->references('ID_TIPO_PRODUCTO')->on('tipo_producto')->onDelete('cascade');

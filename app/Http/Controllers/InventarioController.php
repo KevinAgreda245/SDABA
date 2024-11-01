@@ -12,7 +12,7 @@ class InventarioController extends Controller
 {
     public function index()
     {
-        $inventarios = Inventario::where('ESTADO_ACTIVO_INVENTARIO', true)
+        $inventarios = Inventario::where('ESTADO_ACTIVO_INVENTARIO', 'Activo')
             ->whereColumn('producto.MINIMO_PRODUCTO', '>=', 'inventario.CANTIDAD_INVENTARIO')
             ->join('producto', 'inventario.ID_PRODUCTO', '=', 'producto.ID_PRODUCTO')
             ->get();

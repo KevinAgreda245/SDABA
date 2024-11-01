@@ -42,7 +42,7 @@
                                         <td>{{ $inventario->created_at }}</td>
                                         <td>
 
-                                            <a href="{{ route('ordenProducto.create', $inventario->producto) }}" class="btn btn-primary btn-xs"> Solicitar pedido pedido
+                                            <a href="{{ route('ordenProducto.create', $inventario) }}" class="btn btn-primary btn-xs"> Solicitar pedido pedido
 
                                             </a>
 
