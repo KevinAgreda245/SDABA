@@ -24,6 +24,7 @@ class Inventario extends Model
         'COSTO_INVENTARIO',
         'ID_PRODUCTO',
         'USUARIO_PRODUCTO',
+        'ESTADO_ACTIVO_INVENTARIO',
     ];
 
     // Relación con el modelo Producto
