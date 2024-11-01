@@ -12,7 +12,7 @@
                     <li><a href="#"><i class="ti-receipt"></i> <span>Orden de compra</span></a></li>
                     <li class="{{ request()->is('inventario*') ? 'active' : '' }}"><a href="{{ route('inventario.index') }}"><i class="ti-notepad"></i> <span>Inventario</span></a></li>
                     <li><a href="#"><i class="ti-package"></i> <span>Producto</span></a></li>
-                    <li><a href="#"><i class="ti-truck"></i> <span>Proveedor</span></a></li>
+                    <li class="{{ request()->is('proveedor*') ? 'active' : '' }}"><a href="{{ route('proveedor.index') }}"><i class="ti-truck"></i> <span>Proveedor</span></a></li>
                     <li class="{{ request()->is('tipoProducto*') ? 'active' : '' }}"><a href="{{ route('tipoProducto.index') }}"><i class="ti-notepad"></i> <span>Tipo de Producto</span></a></li>
                     <li><a href="#"><i class="ti-user"></i> <span>Usuario</span></a></li>
                 </ul>
