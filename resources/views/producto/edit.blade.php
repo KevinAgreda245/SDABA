@@ -12,7 +12,7 @@
                         @method('PUT')
                         <!-- Nombre del producto -->
                         <div class="form-group">
-                            <label for="nombre_producto">Nombre del Producto:</label>
+                            <label for="nombreProducto" class="d-inline-flex align-items-center">Nombre:<span class="text-danger ml-1" style="font-size: 0.7em;">(*)</span></label>
                             <input type="text" class="form-control @error('nombre_producto') is-invalid @enderror" 
                                 id="nombre_producto" name="nombre_producto" 
                                 value="{{ old('nombre_producto', $producto->NOMBRE_PRODUCTO) }}" required>
@@ -23,7 +23,7 @@
 
                         <!-- Descripción del producto -->
                         <div class="form-group">
-                            <label for="descripcion_producto">Descripción del Producto:</label>
+                            <label for="descripcion_producto">Descripción:</label>
                             <textarea class="form-control @error('descripcion_producto') is-invalid @enderror" 
                                 id="descripcion_producto" name="descripcion_producto" rows="3">{{ old('descripcion_producto', $producto->DESCRIPCION_PRODUCTO) }}</textarea>
                             @error('descripcion_producto')
@@ -33,7 +33,7 @@
 
                         <!-- Mínimo de producto -->
                         <div class="form-group">
-                            <label for="minimo_producto">Mínimo del Producto:</label>
+                            <label for="minimoProducto" class="d-inline-flex align-items-center">Cantidad mínima:<span class="text-danger ml-1" style="font-size: 0.7em;">(*)</span></label>
                             <input type="number" class="form-control @error('minimo_producto') is-invalid @enderror" 
                                 id="minimo_producto" name="minimo_producto" 
                                 value="{{ old('minimo_producto', $producto->MINIMO_PRODUCTO) }}" required>
@@ -44,7 +44,7 @@
 
                         <!-- Tipo de Producto -->
                         <div class="form-group">
-                            <label for="id_tipo_producto">Tipo de Producto:</label>
+                            <label for="tipoProducto" class="d-inline-flex align-items-center">Tipo de Producto:<span class="text-danger ml-1" style="font-size: 0.7em;">(*)</span></label>
                             <select name="id_tipo_producto" id="id_tipo_producto" class="form-control @error('id_tipo_producto') is-invalid @enderror" required>
                                 @foreach($tiposProducto as $tipo)
                                     <option value="{{ $tipo->ID_TIPO_PRODUCTO }}" {{ $producto->ID_TIPO_PRODUCTO == $tipo->ID_TIPO_PRODUCTO ? 'selected' : '' }}>

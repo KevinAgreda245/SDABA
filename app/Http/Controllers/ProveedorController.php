@@ -85,10 +85,7 @@ class ProveedorController extends Controller
     public function edit(string $id)
     {
         $proveedor = Proveedor::findOrFail($id); // Obtener el proveedor
-        $productos = Producto::all(); // Obtener todos los productos
-        $detalle_proveedor = DetalleProveedor::where('ID_PROVEEDOR', $id)->get(); // Productos asignados
-
-        return view('proveedor.edit', compact('proveedor', 'productos', 'detalle_proveedor'));
+        return view('proveedor.edit', compact('proveedor'));
     }
 
     public function update(Request $request, string $id)
@@ -116,19 +113,6 @@ class ProveedorController extends Controller
             'DIRECCION_PROVEEDOR' => $request->DIRECCION_PROVEEDOR,
         ]);
 
-        // Actualizar productos asignados al proveedor
-        DetalleProveedor::where('ID_PROVEEDOR', $id)->delete(); // Eliminar asignaciones previas
-        if ($request->has('productos')) {
-            foreach ($request->productos as $productoId) {
-                DetalleProveedor::create([
-                    'ID_PRODUCTO' => $productoId,
-                    'ID_PROVEEDOR' => $id,
-                    'PRECIO_PROVEEDOR' => 0, 
-                    'USUARIO_DET_USUARIO' => "Mey"
-                ]);
-            }
-        }
-
         // Redirigir con mensaje de éxito
         return redirect()->route('proveedor.index')->with('success', 'Proveedor actualizado correctamente.');
     }
@@ -145,5 +129,34 @@ class ProveedorController extends Controller
 
         // Redirigir con mensaje de éxito
         return redirect()->route('proveedor.index')->with('success', 'Proveedor eliminado correctamente.');
+    }
+
+    public function editAssign(string $id)
+    {
+        $proveedor = Proveedor::findOrFail($id); // Obtener el proveedor
+        $productos = Producto::all(); // Obtener todos los productos
+        $detalle_proveedor = DetalleProveedor::where('ID_PROVEEDOR', $id)->get(); // Productos asignados
+
+        return view('proveedor.assign', compact('proveedor', 'productos', 'detalle_proveedor'));
+    }
+
+    public function updateAssign(Request $request, string $id) {
+        $proveedor = Proveedor::findOrFail($id);
+
+        // Actualizar productos asignados al proveedor
+        DetalleProveedor::where('ID_PROVEEDOR', $id)->delete(); // Eliminar asignaciones previas
+        if ($request->has('productos')) {
+            foreach ($request->productos as $productoId) {
+                DetalleProveedor::create([
+                    'ID_PRODUCTO' => $productoId,
+                    'ID_PROVEEDOR' => $id,
+                    'PRECIO_PROVEEDOR' => 0, 
+                    'USUARIO_DET_USUARIO' => "Mey"
+                ]);
+            }
+        }
+
+        // Redirigir con mensaje de éxito
+        return redirect()->route('proveedor.index')->with('success', 'Proveedor actualizado correctamente.');        
     }
 }

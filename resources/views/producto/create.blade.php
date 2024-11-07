@@ -11,7 +11,7 @@
                         @csrf <!-- Token CSRF para seguridad -->
                 
                         <div class="form-group">
-                            <label for="nombreProducto">Nombre del Producto:</label>
+                            <label for="nombreProducto" class="d-inline-flex align-items-center">Nombre:<span class="text-danger ml-1" style="font-size: 0.7em;">(*)</span></label>
                             <input type="text" class="form-control @error('nombre_producto') is-invalid @enderror" 
                                    id="nombreProducto" name="nombre_producto" 
                                    placeholder="Ingrese el nombre del producto" 
@@ -36,7 +36,7 @@
                         </div>
                     
                         <div class="form-group">
-                            <label for="minimoProducto">Cantidad Mínima:</label>
+                            <label for="minimoProducto" class="d-inline-flex align-items-center">Cantidad mínima:<span class="text-danger ml-1" style="font-size: 0.7em;">(*)</span></label>
                             <input type="number" class="form-control @error('minimo_producto') is-invalid @enderror" 
                                    id="minimoProducto" name="minimo_producto" 
                                    placeholder="Ingrese la cantidad mínima" 
@@ -49,7 +49,7 @@
                         </div>
                     
                         <div class="form-group">
-                            <label for="tipoProducto">Tipo de Producto:</label>
+                            <label for="tipoProducto" class="d-inline-flex align-items-center">Tipo de Producto:<span class="text-danger ml-1" style="font-size: 0.7em;">(*)</span></label>
                             <select class="form-control @error('id_tipo_producto') is-invalid @enderror" 
                                     id="tipoProducto" name="id_tipo_producto">
                                 <option value="">Seleccione un tipo de producto</option>

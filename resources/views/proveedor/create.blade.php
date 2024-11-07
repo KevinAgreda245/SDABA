@@ -7,15 +7,14 @@
         <h1>Nuevo Proveedor</h1>
 
         <div class="col-12 mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title">Información general.</h4>
-                    <form action="{{ route('proveedor.store') }}" method="POST">
-                        @csrf
-
+            <form action="{{ route('proveedor.store') }}" method="POST">
+                @csrf
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Información general.</h4>
                         <!-- Campos de información básica del proveedor -->
                         <div class="form-group">
-                            <label for="nombreProveedor">Nombre del Proveedor:</label>
+                            <label for="nombreProveedor" class="d-inline-flex align-items-center">Nombre:<span class="text-danger ml-1" style="font-size: 0.7em;">(*)</span></label>
                             <input type="text" class="form-control @error('NOMBRE_PROVEEDOR') is-invalid @enderror"  
                                 id="nombreProveedor" name="NOMBRE_PROVEEDOR"  
                                 placeholder="Ingrese el nombre del proveedor"
@@ -28,7 +27,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="correoProveedor">Correo:</label>
+                            <label for="correoProveedor" class="d-inline-flex align-items-center">Correo electrónico:<span class="text-danger ml-1" style="font-size: 0.7em;">(*)</span></label>
                             <!-- Validar formato de correo-->
                             <input type="email" class="form-control @error('CORREO_PROVEEDOR') is-invalid @enderror"  
                                 id="correoProveedor" name="CORREO_PROVEEDOR"  
@@ -69,18 +68,25 @@
 
                         <!-- Sección para asignar productos al proveedor -->
                         <div class="form-group">
-                            <h4 class="header-title">Selección de productos</h4>
-                            <label for="productos">Asignar Productos</label>
-                            <select id="productos" class="form-control">
-                                <option value="" disabled selected>Seleccione el producto</option>
-                                @foreach($productos as $producto)
-                                    <option value="{{ $producto->ID_PRODUCTO }}">{{ $producto->NOMBRE_PRODUCTO }}</option>
-                                @endforeach
-                            </select>
-                            <button type="button" id="add-producto" class="btn btn-secondary mt-2">Agregar Producto</button>
+                            <h4 class="header-title">Selección de productos <span class="text-danger ml-1" style="font-size: 0.7em;">(*)</span></h4>
+                            <div class="form-row align-items-end">
+                                <div class="col-md-8">
+                                    <label for="productos">Producto:</label>
+                                    <select id="productos" class="form-control">
+                                        <option value="" disabled selected>Seleccione el producto</option>
+                                        @foreach($productos as $producto)
+                                            <option value="{{ $producto->ID_PRODUCTO }}">{{ $producto->NOMBRE_PRODUCTO }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <button type="button" id="add-producto" class="btn btn-secondary mt-2">Agregar Producto</button>
+                                </div>
+                            </div>
                         </div>
 
-                        <table class="table mt-3" id="tabla-productos">
+                        <table class="table mt-3" id="tabla-productos" style="display: none;">
                             <thead>
                                 <tr>
                                     <th>Producto</th>
@@ -137,6 +143,9 @@
         `;
 
         tbody.appendChild(row);
+
+        // Mostrar la tabla cuando se agrega el primer producto
+        document.getElementById('tabla-productos').style.display = 'table';
     });
 
     document.getElementById('tabla-productos').addEventListener('click', function (e) {

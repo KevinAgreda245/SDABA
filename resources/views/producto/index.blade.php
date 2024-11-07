@@ -40,7 +40,7 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $producto->NOMBRE_PRODUCTO }}</td>
-                                        <td>{{ $producto->DESCRIPCION_PRODUCTO ?: 'No registra' }}</td>
+                                        <td>{{ $producto->tipoProducto->NOMBRE_TIPO_PRODUCTO ?? 'No asignado' }}</td>
                                         <td>{{ $producto->MINIMO_PRODUCTO }}</td>
                                         <td>
                                             <a href="{{ route('producto.edit', $producto->ID_PRODUCTO) }}" class="btn btn-warning">Editar</a>
