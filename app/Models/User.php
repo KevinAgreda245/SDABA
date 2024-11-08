@@ -6,10 +6,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;//Importar libreria de spatie
+
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+    //Para utilizar el paquete de spatie
+    use HasRoles;
 
     // Especificar la tabla que usará este modelo
     protected $table = 'usuario';

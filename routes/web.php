@@ -9,6 +9,10 @@ use App\Http\Controllers\TipoProductoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 
+//Controladores de Usuario y roles
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\RolController;
+
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/main', [MainController::class, 'index'])->name('main');
@@ -24,4 +28,10 @@ Route::post('ordenProducto', [OrdenProductoController::class, 'store'])->name('o
 Route::resource('proveedor', ProveedorController::class);
 Route::resource('ordenProducto', OrdenProductoController::class);
 Route::resource('producto', ProductoController::class);
+
+//Rutas de usuarios y roles
+Route::group(['middleware' => ['auth']], function(){
+    Route::resource('roles', RolController::class);
+    Route::resource('usuarios', UsuarioController::class);
+});
 

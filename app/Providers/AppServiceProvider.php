@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+//Configuración de rutina
+//use Iluminate\Support\Facades\Schema;
+//use Iluminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        //Parte de configuraciones de rutina.
+        //Schema::defaultStringLength(191);
+        //Paginator::useBooststrap();
     }
 }
