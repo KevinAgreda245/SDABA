@@ -19,49 +19,22 @@
             @endif
         </div>
         <div class="col-12 mt-3">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title">Inventario</h4>
-                    <div class="data-tables datatable-dark">
-                        <table id="tbl-tipo" class="text-center">
-                            <thead class="text-capitalize">
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Existencias</th>
-                                    <th>Tipo de producto</th>
-                                    <th>Fecha de compra</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($inventarios as $index => $inventario)
-                                    <tr>
-                                        <td>{{ $inventario->producto->NOMBRE_PRODUCTO }}</td>
-                                        <td>{{ $inventario->CANTIDAD_INVENTARIO }}</td>
-                                        <td>{{ $inventario->producto->tipoProducto->NOMBRE_TIPO_PRODUCTO }}</td>
-                                        <td>{{ $inventario->created_at }}</td>
-                                        <td>
-
-                                            <a href="{{ route('ordenProducto.create', $inventario) }}" class="btn btn-primary btn-xs"> Solicitar pedido pedido
-
-                                            </a>
-
-
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="list-group">
+                @foreach ($inventarios as $index => $inventario)
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-3">{{ $inventario->producto->NOMBRE_PRODUCTO }}</h4>
+                            <small>{{ $inventario->created_at->format('d/m/Y h:i A') }}</small>
+                        </div>
+                        <p class="mb-1"><span class="badge {{ $inventario->CANTIDAD_INVENTARIO < $inventario->producto->MINIMO_PRODUCTO ? 'badge-danger' : 'badge-primary' }} p-2"><b>Cantidad en existencia:</b> <span class="badge badge-light">{{ $inventario->CANTIDAD_INVENTARIO }}</span></span></p>
+                    </a>
+                @endforeach
+                <nav aria-label="Inventarios Paginación" class="d-flex justify-content-end mt-3">
+                    {{ $inventarios->links('pagination::bootstrap-4') }}
+                </nav>
             </div>
         </div>
     </div>
 @endsection
 @section('custom-scripts')
-    <script>
-        $(document).ready(function() {
-            initTable('#tbl-tipo');
-        });
-    </script>
 @endsection
