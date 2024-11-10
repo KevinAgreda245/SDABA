@@ -31,8 +31,6 @@
                                     <th>N°</th>
                                     <th>Nombre</th>
                                     <th>Correo</th>
-                                    <th>Teléfono</th>
-                                    <th>Dirección</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -42,10 +40,9 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $prov->NOMBRE_PROVEEDOR }}</td>
                                         <td>{{ $prov->CORREO_PROVEEDOR }}</td>
-                                        <td>{{ $prov->TELEFONO_PROVEEDOR ?: 'No registra' }}</td>
-                                        <td>{{ $prov->DIRECCION_PROVEEDOR ?: 'No registra' }}</td>
                                         <td>
                                             <a href="{{ route('proveedor.edit', $prov->ID_PROVEEDOR) }}" class="btn btn-warning">Editar</a>
+                                            <a href="{{ route('proveedor.editAssign', $prov->ID_PROVEEDOR) }}" class="btn btn-dark">Asignar productos</a>
                                             <a href="{{ route('proveedor.show', $prov->ID_PROVEEDOR) }}" class="btn btn-primary">Ver productos</a>
                                             <form action="{{ route('proveedor.destroy', $prov->ID_PROVEEDOR) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar el proveedor: {{ $prov->NOMBRE_PROVEEDOR }}? Esta acción no se puede deshacer.');">
                                                 @csrf

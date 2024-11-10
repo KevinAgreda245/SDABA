@@ -11,7 +11,7 @@
                         @csrf <!-- Token CSRF para seguridad -->
                         @method('PUT')
                         <div class="form-group">
-                            <label for="nombreTipoProducto">Nombre del Tipo de Producto:</label>
+                            <label for="nombreTipoProducto" class="d-inline-flex align-items-center">Nombre:<span class="text-danger ml-1" style="font-size: 0.7em;">(*)</span></label>
                             <input type="text" class="form-control @error('NOMBRE_TIPO_PRODUCTO') is-invalid @enderror" 
                                 id="nombreTipoProducto" name="NOMBRE_TIPO_PRODUCTO" 
                                 placeholder="Ingrese el nombre del tipo de producto" 
