@@ -30,8 +30,9 @@ Route::resource('ordenProducto', OrdenProductoController::class);
 Route::resource('producto', ProductoController::class);
 
 //Rutas de usuarios y roles
-Route::group(['middleware' => ['auth']], function(){
+//Route::group(['middleware' => ['auth']], function(){
     Route::resource('roles', RolController::class);
     Route::resource('usuarios', UsuarioController::class);
-});
+//});
 
+//Route::get('/usuarios', [UsuarioController::class, 'index'])->name('login');

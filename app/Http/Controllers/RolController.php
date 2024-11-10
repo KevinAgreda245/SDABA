@@ -8,15 +8,18 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Traits\HasRoles;
 
 
 class RolController extends Controller
 {
+    //use HasRoles;
     function __construct(){
-        $this->middleware('permission:ver-rol | crear-rol | editar-rol | borrar-rol', ['only'=>['index']]);
-        $this->middleware('permission:crear-rol', ['only'=>['create, store']]);
-        $this->middleware('permission:editar-rol', ['only'=>['edit, update']]);
-        $this->middleware('permission:borrar-rol', ['only'=>['destroy']]);
+        $this->middleware('auth');
+        //$this->middleware('permission:ver-rol | crear-rol | editar-rol | borrar-rol', ['only'=>['index']]);
+        //$this->middleware('permission:crear-rol', ['only'=>['create, store']]);
+        //$this->middleware('permission:editar-rol', ['only'=>['edit, update']]);
+        //$this->middleware('permission:borrar-rol', ['only'=>['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -45,7 +48,7 @@ class RolController extends Controller
     public function store(Request $request)
     {
         //Para guardar los datos ingresados en el formulario,
-        $this->validate($request, ['name' => 'required', 'permission' => 'required']);
+        $request->validate(['name' => 'required', 'permission' => 'required']);
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
 
@@ -80,7 +83,7 @@ class RolController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $this->validate($request, ['name' => 'required', 'permission' => 'required']);
+        $request->validate(['name' => 'required', 'permission' => 'required']);
 
         $role = Role::find($id);
         $role->name = $request->input('name');

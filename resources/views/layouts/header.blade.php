@@ -14,8 +14,8 @@
                     <li class="{{ request()->is('proveedor*') ? 'active' : '' }}"><a href="{{ route('proveedor.index') }}"><i class="ti-truck"></i> <span>Proveedor</span></a></li>
                     <li class="{{ request()->is('producto*') ? 'active' : '' }}"><a href="{{ route('producto.index') }}"><i class="ti-package"></i> <span>Producto</span></a></li>
                     <li class="{{ request()->is('tipoProducto*') ? 'active' : '' }}"><a href="{{ route('tipoProducto.index') }}"><i class="ti-notepad"></i> <span>Tipo de Producto</span></a></li>
-                    <li><a href="#"><i class="ti-user"></i> <span>Usuario</span></a></li>
-                    <li><a href="#"><i class="ti-user"></i> <span>Roles</span></a></li>
+                    <li class="{{ request()->is('usuarios*') ? 'active' : '' }}"><a href="{{ route('usuarios.index') }}"><i class="ti-user"></i> <span>Usuario</span></a></li>
+                    <li><a href="#"><i class="ti-rol"></i> <span>Roles</span></a></li>
                 </ul>
             </nav>
         </div>

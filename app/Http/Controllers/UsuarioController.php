@@ -20,8 +20,10 @@ class UsuarioController extends Controller
     public function index()
     {
         //
-        $usuarios = User::paginate(5);
+        //$usuarios = User::paginate(5);
+        $usuarios = User::all();
         return view('usuarios.index', compact('usuarios'));
+        //return view('usuarios.index');
     }
 
     /**
@@ -40,7 +42,7 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
+        $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
@@ -83,7 +85,7 @@ class UsuarioController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $this->validate($request, [
+        $request->validate([
             'name' => 'required',
             'email'=> 'required|email|unique:users, email'.$id,
             'password'=> 'same:confirm-password',
