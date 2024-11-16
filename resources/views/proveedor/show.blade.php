@@ -15,7 +15,16 @@
                 @else
                     <ul class="list-group">
                         @foreach ($productos as $producto)
-                            <li class="list-group-item">{{ $producto->NOMBRE_PRODUCTO }}</li>
+                            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">{{ $producto->NOMBRE_PRODUCTO }}</h5>
+                                </div>
+                                <p class="mb-1">${{ number_format($producto->PRECIO_PROVEEDOR, 2) }}</p>
+                                @if ($producto->PREFERIDO_PROVEEDOR == 1)
+                                    <span class="badge badge-success">Proveedor preferido</span>
+                                @endif
+                                
+                            </div>    
                         @endforeach
                     </ul>
                 @endif

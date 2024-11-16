@@ -16,7 +16,8 @@ class DetalleProveedor extends Model
     protected $fillable = [
         'ID_PRODUCTO', 
         'ID_PROVEEDOR', 
-        'PRECIO_PROVEEDOR', 
+        'PRECIO_PROVEEDOR',
+        'COSTO_PROVEEDOR', 
         'PREFERIDO_PROVEEDOR', 
         'USUARIO_DET_USUARIO'
     ]; // Campos que se pueden llenar

@@ -52,17 +52,37 @@ class ProveedorController extends Controller
         $proveedor = Proveedor::create($data);
 
         // Asignar productos al proveedor en la tabla de detalle_proveedor
-        if ($request->has('productos')) {
-            foreach ($request->productos as $productoId) {
+        if ($request->has('productos') && !empty($request->productos)) {
+            // Decodifica el JSON a un array
+            $productos = json_decode($request->productos, true);
+        
+            // Itera sobre cada producto y guarda los detalles en la base de datos
+            foreach ($productos as $producto) {
+                if ($producto['preferido'] == 1) {
+                    // Buscar si el producto ya tiene un proveedor preferido asignado
+                    $productoPreferidoActual = DetalleProveedor::where('ID_PRODUCTO', $producto['id'])
+                                                               ->where('PREFERIDO_PROVEEDOR', 1) // Solo buscamos el preferido actual
+                                                               ->first();
+                
+                    // Si ya hay un proveedor preferido, actualizarlo a 0
+                    if ($productoPreferidoActual) {
+                        $productoPreferidoActual->PREFERIDO_PROVEEDOR = 0;
+                        $productoPreferidoActual->save(); // Guardar el cambio
+                    }
+                }
+
                 DetalleProveedor::create([
-                    'ID_PRODUCTO' => $productoId,
-                    'ID_PROVEEDOR' => $proveedor->ID_PROVEEDOR,
-                    'PRECIO_PROVEEDOR' => $request->input('PRECIO_PROVEEDOR', 0.00),
-                    'USUARIO_DET_USUARIO' => "Mey",
+                    'ID_PRODUCTO' => $producto['id'],
+                    'ID_PROVEEDOR' => $proveedor->ID_PROVEEDOR, // Usamos el ID del proveedor recién creado
+                    'PRECIO_PROVEEDOR' => $producto['precio'],
+                    'COSTO_PROVEEDOR' => $producto['costo'],
+                    'PREFERIDO_PROVEEDOR' => $producto['preferido'],
+                    'USUARIO_DET_USUARIO' => "Mey", // Usuario actual o el valor correspondiente
                 ]);
             }
         }
-
+        
+    
         // Redirigir con mensaje de éxito
         return redirect()->route('proveedor.index')->with('success', 'Proveedor añadido correctamente.');
     }
@@ -70,16 +90,16 @@ class ProveedorController extends Controller
     public function show(string $id)
     {
         // Obtener el proveedor por su ID
-    $proveedor = Proveedor::findOrFail($id);
-    
-    // Obtener productos asignados a este proveedor
-    $productos = Producto::join('detalle_proveedor', 'producto.ID_PRODUCTO', '=', 'detalle_proveedor.ID_PRODUCTO')
-                        ->where('detalle_proveedor.ID_PROVEEDOR', $id)
-                        ->select('producto.NOMBRE_PRODUCTO')
-                        ->get();
+        $proveedor = Proveedor::findOrFail($id);
 
-    // Retornar la vista con los datos del proveedor y sus productos
-    return view('proveedor.show', compact('proveedor', 'productos'));
+        // Obtener productos asignados a este proveedor, incluyendo detalles como el costo y si es preferido
+        $productos = Producto::join('detalle_proveedor', 'producto.ID_PRODUCTO', '=', 'detalle_proveedor.ID_PRODUCTO')
+            ->where('detalle_proveedor.ID_PROVEEDOR', $id)
+            ->select('producto.NOMBRE_PRODUCTO', 'detalle_proveedor.PRECIO_PROVEEDOR', 'detalle_proveedor.PREFERIDO_PROVEEDOR')
+            ->get();
+
+        // Retornar la vista con los datos del proveedor y sus productos
+        return view('proveedor.show', compact('proveedor', 'productos'));
     }
 
     public function edit(string $id)
@@ -141,22 +161,54 @@ class ProveedorController extends Controller
     }
 
     public function updateAssign(Request $request, string $id) {
-        $proveedor = Proveedor::findOrFail($id);
-
-        // Actualizar productos asignados al proveedor
-        DetalleProveedor::where('ID_PROVEEDOR', $id)->delete(); // Eliminar asignaciones previas
-        if ($request->has('productos')) {
-            foreach ($request->productos as $productoId) {
-                DetalleProveedor::create([
-                    'ID_PRODUCTO' => $productoId,
-                    'ID_PROVEEDOR' => $id,
-                    'PRECIO_PROVEEDOR' => 0, 
+        $request->validate([
+            'productos' => 'array',
+            'costos' => 'array',
+            'precios' => 'array',
+            'preferidos' => 'array',
+            'costos.*' => 'numeric|min:0',
+            'precios.*' => 'numeric|min:0',
+        ]);
+    
+        $productos = $request->input('productos', []);
+        $costos = $request->input('costos', []);
+        $precios = $request->input('precios', []);
+        $preferidos = $request->input('preferidos', []);
+    
+        // Eliminar productos no seleccionados
+        DetalleProveedor::where('ID_PROVEEDOR', $id)
+            ->whereNotIn('ID_PRODUCTO', $productos)
+            ->delete();
+    
+        // Actualizar o crear productos
+        foreach ($productos as $productoId) {
+            DetalleProveedor::updateOrCreate(
+                ['ID_PROVEEDOR' => $id, 'ID_PRODUCTO' => $productoId],
+                [
+                    'COSTO_PROVEEDOR' => $costos[$productoId] ?? 0,
+                    'PRECIO_PROVEEDOR' => $precios[$productoId] ?? 0,
+                    'PREFERIDO_PROVEEDOR' => $preferidos[$productoId] ?? 0,
                     'USUARIO_DET_USUARIO' => "Mey"
-                ]);
-            }
+                ]
+            );
         }
 
-        // Redirigir con mensaje de éxito
-        return redirect()->route('proveedor.index')->with('success', 'Proveedor actualizado correctamente.');        
+        return redirect()->route('proveedor.index')->with('success', 'Los productos han sido actualizados correctamente.');
     }
+
+    public function getPreferredSuplier($id)
+    {
+        // Busca el proveedor preferido del producto con el ID dado
+        $detalleProveedor = DetalleProveedor::where('ID_PRODUCTO', $id)
+        ->where('PREFERIDO_PROVEEDOR', 1)
+        ->with('proveedor')  // Carga el proveedor asociado
+        ->first();
+
+        // Si existe un proveedor preferido, retornamos su nombre, de lo contrario, null
+        $proveedor = $detalleProveedor ? $detalleProveedor->proveedor : null;
+
+       
+        return response()->json($proveedor);
+    }
+
 }

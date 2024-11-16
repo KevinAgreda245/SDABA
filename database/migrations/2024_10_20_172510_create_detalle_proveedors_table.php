@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('ID_DETALLE_PROVEEDOR'); // Serial
             $table->foreignId('ID_PRODUCTO')->constrained('producto', 'ID_PRODUCTO')->onDelete('cascade'); // Foreign key to producto
             $table->foreignId('ID_PROVEEDOR')->constrained('proveedor', 'id_proveedor')->onDelete('cascade'); // Foreign key to proveedor
+            $table->decimal('COSTO_PROVEEDOR', 10, 2); // Decimal
             $table->decimal('PRECIO_PROVEEDOR', 10, 2); // Decimal
             $table->boolean('PREFERIDO_PROVEEDOR')->default(false); // Boolean
             $table->string('USUARIO_DET_USUARIO'); // String
