@@ -23,4 +23,9 @@ class DetalleOrdenCompra extends Model
     ];
 
     public $timestamps = true;
+
+    public function producto()
+{
+    return $this->belongsTo(Producto::class, 'ID_PRODUCTO', 'ID_PRODUCTO');
+}
 }

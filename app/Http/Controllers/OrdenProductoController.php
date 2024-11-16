@@ -6,12 +6,29 @@ use App\Models\DetalleOrdenCompra;
 use App\Models\Inventario;
 use App\Models\Producto;
 use App\Models\Proveedor;
+use App\Models\OrdenCompra;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 
 class OrdenProductoController extends Controller
 {
-    //
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        // Órdenes pendientes
+        $ordenesPendientes = OrdenCompra::with('proveedor', 'estadoOrden')
+        ->whereIn('ID_ESTADO_ORDEN', [1, 2])
+        ->get();
+
+        // Órdenes procesadas/denegadas
+        $ordenesProcesadas = OrdenCompra::with('proveedor', 'estadoOrden')
+        ->whereIn('ID_ESTADO_ORDEN', [3, 4])
+        ->get();
+        
+        return view('ordenProducto.index',compact('ordenesPendientes', 'ordenesProcesadas'));
+    }
 
     //create get method
     public function create(Inventario $inventario)
@@ -75,7 +92,25 @@ class OrdenProductoController extends Controller
         $inventario->save();
 
         return redirect()->route('inventario.index')->with('success', 'Orden de compra creada exitosamente.');
+        
+    }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        // Carga la orden con los detalles y el proveedor relacionado
+        $orden = OrdenCompra::with(['detalles.producto', 'proveedor'])
+        ->findOrFail($id);
+        return view('ordenProducto.show',compact('orden'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
         
     }
 }
