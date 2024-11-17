@@ -70,8 +70,8 @@
                             </div>
                         </div>
                         <div class="invoice-buttons text-right">
-                            <a href="#" class="invoice-btn">Imprimir Orden</a>
-                            <a href="#" class="invoice-btn">Enviar Orden</a>
+                            <a href="{{ route('ordenProducto.index') }}" class="invoice-btn">Volver</a>
+                            <a href="{{ route('ordenes.imprimir', $orden->ID_ORDEN_COMPRA) }}" class="invoice-btn">Imprimir Orden</a>
                         </div>
                     </div>
                 </div>

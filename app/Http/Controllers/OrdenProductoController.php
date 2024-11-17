@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\DetalleOrdenCompra;
 use App\Models\Inventario;
 use App\Models\Producto;
@@ -9,6 +10,7 @@ use App\Models\Proveedor;
 use App\Models\OrdenCompra;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrdenProductoController extends Controller
 {
@@ -113,4 +115,15 @@ class OrdenProductoController extends Controller
     {
         
     }
+
+    public function imprimir($id)
+{
+    $orden = OrdenCompra::with(['proveedor', 'detalles.producto'])->findOrFail($id);
+
+    // Generar el PDF usando una vista
+    $pdf = Pdf::loadView('ordenProducto.print', compact('orden'));
+
+    // Retornar el PDF como descarga o para mostrarlo
+    return $pdf->stream('Orden_Compra_' . str_pad($orden->ID_ORDEN_COMPRA, 5, '0', STR_PAD_LEFT) . '.pdf');
+}
 }

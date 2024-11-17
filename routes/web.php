@@ -16,6 +16,7 @@ Route::resource('tipoProducto', TipoProductoController::class);
 Route::resource('inventario', InventarioController::class);
 
 Route::resource('ordenProducto', OrdenProductoController::class);
+Route::get('/ordenProducto/{id}/imprimir', [OrdenProductoController::class, 'imprimir'])->name('ordenes.imprimir');
 
 Route::resource('proveedor', ProveedorController::class);
 Route::get('/proveedor/{id}/editAssign', [ProveedorController::class, 'editAssign'])->name('proveedor.editAssign');
