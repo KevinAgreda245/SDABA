@@ -13,6 +13,9 @@
                     @if(Auth::user()->rol->DESCRIPCION_ROL == 'Gestor de Inventario')
                         <li class="{{ request()->is('inventario*') ? 'active' : '' }}"><a href="{{ route('inventario.index') }}"><i class="ti-notepad"></i> <span>Inventario</span></a></li>
                     @endif
+                    @if(Auth::user()->rol->DESCRIPCION_ROL == 'Gerente de Almacen')
+                    <li class="{{ request()->is('despacho*') ? 'active' : '' }}"><a href="{{ route('despacho.index') }}"><i class="ti-truck"></i> <span>Despacho</span></a></li>
+                    @endif
                     @if(Auth::user()->rol->DESCRIPCION_ROL == 'Administrador' || Auth::user()->rol->DESCRIPCION_ROL == 'Gestor de Inventario')
                     <li class="{{ request()->is('proveedor*') ? 'active' : '' }}"><a href="{{ route('proveedor.index') }}"><i class="ti-truck"></i> <span>Proveedor</span></a></li>
                     <li class="{{ request()->is('producto*') ? 'active' : '' }}"><a href="{{ route('producto.index') }}"><i class="ti-package"></i> <span>Producto</span></a></li>

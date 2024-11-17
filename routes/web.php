@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InventarioController;
+use App\Http\Controllers\DespachoController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\OrdenProductoController;
 use App\Http\Controllers\TipoProductoController;
@@ -42,5 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('usuario', UsuarioController::class); 
     Route::get('usuario/{usuario}/password', [UsuarioController::class, 'editPassword'])->name('usuario.password.edit');
     Route::put('usuario/{usuario}/password', [UsuarioController::class, 'updatePassword'])->name('usuario.password.update');
+    
+    Route::resource('despacho', DespachoController::class);
+    Route::get('/despacho/{id}/pdf', [DespachoController::class, 'generatePdf'])->name('despacho.pdf');
 });
 

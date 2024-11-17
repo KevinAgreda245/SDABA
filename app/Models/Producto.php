@@ -29,4 +29,5 @@ class Producto extends Model
     {
         return $this->belongsTo(TipoProducto::class, 'ID_TIPO_PRODUCTO');
     }
+    
 }
