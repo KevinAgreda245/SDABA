@@ -33,8 +33,58 @@ class OrdenProductoController extends Controller
         return view('ordenProducto.index',compact('ordenesPendientes', 'ordenesProcesadas'));
     }
 
+    public function create() {
+        //obtener los proveedores del producto
+        $proveedores = Proveedor::all();
+        $productos = Producto::all();
+        return view('ordenProducto.create',compact('productos', 'proveedores'));
+    }
+
+    public function store(Request $request)
+    {
+        // Validar los datos recibidos
+        $request->validate([
+            'proveedor' => 'required',
+            'productos' => 'required|json',
+        ]);
+
+        try {
+            // Crear la orden de compra
+            $ordenCompra = OrdenCompra::create([
+                'ID_PROVEEDOR' => $request->proveedor,
+                'ID_ESTADO_ORDEN' => 1, 
+                'FECHA_COMPRA' => Carbon::today(), // Solo la fecha (sin hora)
+                'USUARIO_ORDEN_COMPRA' => 'Mey',
+            ]);
+
+            // Decodificar los productos seleccionados
+            $productos = json_decode($request->productos, true);
+
+            // Crear los detalles de la orden
+            foreach ($productos as $producto) {
+                DetalleOrdenCompra::create([
+                    'ID_ORDEN_COMPRA' => $ordenCompra->ID_ORDEN_COMPRA,
+                    'ID_PRODUCTO' => $producto['producto_id'],
+                    'CANTIDAD_PRODUCTO' => $producto['cantidad'],
+                    'COSTO_PRODUCTO' => $producto['costo'],
+                    'PRECIO_PRODUCTO' => $producto['precio'],
+                    'FREG_ORDEN_COMPRA' => now(), // Fecha de creación
+                    'USUARIO_ORDEN_COMPRA' => 'Mey',
+                ]);
+            }
+
+            return redirect()->route('ordenProducto.index')
+                ->with('success', 'Orden de compra creada exitosamente.');
+
+        } catch (\Exception $e) {
+
+            return redirect()->back()
+                ->withErrors(['error' => 'Ocurrió un error al guardar la orden de compra: ' . $e->getMessage()]);
+        }
+    }
+
     //create get method
-    public function create(Inventario $inventario)
+    public function create2(Inventario $inventario)
     {
         //obtener los proveedores del producto
         $proveedores = Proveedor::all();
@@ -43,7 +93,7 @@ class OrdenProductoController extends Controller
     }
 
     // recibe form 
-    public function store(Request $request)
+    public function store2(Request $request)
     {
         // valida que todos los campos esten llenos
         $request->validate([

@@ -32,4 +32,5 @@ class DetalleProveedor extends Model
     {
         return $this->belongsTo(Proveedor::class, 'ID_PROVEEDOR');
     }
+
 }

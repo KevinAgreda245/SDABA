@@ -20,4 +20,10 @@ class Proveedor extends Model
         'DIRECCION_PROVEEDOR', 
         'USUARIO_PROVEEDOR'
     ];
+
+    // Definición de la relación
+    public function detallesProveedor()
+    {
+        return $this->hasMany(DetalleProveedor::class, 'ID_PROVEEDOR');
+    }
 }

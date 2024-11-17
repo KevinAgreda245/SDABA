@@ -9,7 +9,7 @@
             <h1>Órdenes de Compras</h1>
         </div>
         <div class="col-auto">
-            <a href="{{ route('producto.create') }}" class="btn btn-flat btn-info btn-lg btn-block">Crear Nueva Orden</a>
+            <a href="{{ route('ordenProducto.create') }}" class="btn btn-flat btn-info btn-lg btn-block">Crear Nueva Orden</a>
         </div>    
     </div>
     

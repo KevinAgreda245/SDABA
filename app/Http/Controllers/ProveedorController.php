@@ -211,4 +211,42 @@ class ProveedorController extends Controller
         return response()->json($proveedor);
     }
 
+    // Método para obtener productos de un proveedor
+    public function getProductosPorProveedor($proveedorId)
+    {
+        // Buscar los detalles de proveedor para el proveedor dado
+    $detallesProveedor = DetalleProveedor::where('ID_PROVEEDOR', $proveedorId)->get();
+
+    // Verificar si existen detalles de proveedor
+    if ($detallesProveedor->isEmpty()) {
+        return response()->json(['error' => 'No se encontraron productos para este proveedor'], 404);
+    }
+
+    // Obtener los productos asociados a este proveedor a través de los detalles
+    $productos = $detallesProveedor->map(function ($detalle) {
+        return $detalle->producto; // Obtiene el producto asociado a cada detalle
+    });
+
+    // Devolver los productos en formato JSON
+    return response()->json($productos);
+    }
+
+
+    public function getInfo($productoId, $proveedorId) {
+        // Buscar el detalle del proveedor para este producto y proveedor
+        $detalle = DetalleProveedor::where('ID_PRODUCTO', $productoId)
+                                   ->where('ID_PROVEEDOR', $proveedorId)
+                                   ->first();
+
+        // Verificar si el detalle existe
+        if (!$detalle) {
+            return response()->json(['error' => 'Detalle no encontrado'], 404);
+        }
+
+        // Devolver el costo y precio en formato JSON
+        return response()->json([
+            'precio' => $detalle->PRECIO_PROVEEDOR,
+            'costo' => $detalle->COSTO_PROVEEDOR,
+        ]);
+    }
 }

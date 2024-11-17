@@ -124,4 +124,5 @@ class ProductoController extends Controller
         // Redirige con mensaje de éxito
         return redirect()->route('producto.index')->with('success', 'Producto eliminado exitosamente.');
     }
+
 }

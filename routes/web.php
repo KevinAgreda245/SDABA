@@ -25,5 +25,8 @@ Route::resource('proveedor', ProveedorController::class);
 Route::get('/proveedor/{id}/editAssign', [ProveedorController::class, 'editAssign'])->name('proveedor.editAssign');
 Route::put('/proveedor/{id}/updateAssign', [ProveedorController::class, 'updateAssign'])->name('proveedor.updateAssign');
 Route::get('/producto/{id}/preferredSupplier', [ProveedorController::class, 'getPreferredSuplier'])->name('proveedor.getPreferredSuplier');
+Route::get('/proveedor/{proveedorId}/productos', [ProveedorController::class, 'getProductosPorProveedor']);
+
 Route::resource('producto', ProductoController::class);
+Route::get('/producto/{productoId}/proveedor/{proveedorId}', [ProveedorController::class, 'getInfo']);
 
