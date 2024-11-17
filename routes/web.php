@@ -10,23 +10,28 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/main', [MainController::class, 'index'])->name('main');
-Route::resource('tipoProducto', TipoProductoController::class);
-Route::resource('inventario', InventarioController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/main', [MainController::class, 'index'])->name('main');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::resource('ordenProducto', OrdenProductoController::class);
-Route::get('/ordenProducto/{id}/imprimir', [OrdenProductoController::class, 'imprimir'])->name('ordenes.imprimir');
-Route::get('/ordenProducto/{id}/autorizar', [OrdenProductoController::class, 'autorizar'])->name('ordenProducto.autorizar');
-Route::get('/ordenProducto/{id}/denegar', [OrdenProductoController::class, 'denegar'])->name('ordenProducto.denegar');
-Route::get('/orden-producto/{id}/finalizar', [OrdenProductoController::class, 'finalizar'])->name('ordenProducto.finalizar');
+    Route::resource('tipoProducto', TipoProductoController::class);
+    Route::resource('inventario', InventarioController::class);
 
-Route::resource('proveedor', ProveedorController::class);
-Route::get('/proveedor/{id}/editAssign', [ProveedorController::class, 'editAssign'])->name('proveedor.editAssign');
-Route::put('/proveedor/{id}/updateAssign', [ProveedorController::class, 'updateAssign'])->name('proveedor.updateAssign');
-Route::get('/producto/{id}/preferredSupplier', [ProveedorController::class, 'getPreferredSuplier'])->name('proveedor.getPreferredSuplier');
-Route::get('/proveedor/{proveedorId}/productos', [ProveedorController::class, 'getProductosPorProveedor']);
+    Route::resource('ordenProducto', OrdenProductoController::class);
+    Route::get('/ordenProducto/{id}/imprimir', [OrdenProductoController::class, 'imprimir'])->name('ordenes.imprimir');
+    Route::get('/ordenProducto/{id}/autorizar', [OrdenProductoController::class, 'autorizar'])->name('ordenProducto.autorizar');
+    Route::get('/ordenProducto/{id}/denegar', [OrdenProductoController::class, 'denegar'])->name('ordenProducto.denegar');
+    Route::get('/orden-producto/{id}/finalizar', [OrdenProductoController::class, 'finalizar'])->name('ordenProducto.finalizar');
 
-Route::resource('producto', ProductoController::class);
-Route::get('/producto/{productoId}/proveedor/{proveedorId}', [ProveedorController::class, 'getInfo']);
+    Route::resource('proveedor', ProveedorController::class);
+    Route::get('/proveedor/{id}/editAssign', [ProveedorController::class, 'editAssign'])->name('proveedor.editAssign');
+    Route::put('/proveedor/{id}/updateAssign', [ProveedorController::class, 'updateAssign'])->name('proveedor.updateAssign');
+    Route::get('/producto/{id}/preferredSupplier', [ProveedorController::class, 'getPreferredSuplier'])->name('proveedor.getPreferredSuplier');
+    Route::get('/proveedor/{proveedorId}/productos', [ProveedorController::class, 'getProductosPorProveedor']);
+
+    Route::resource('producto', ProductoController::class);
+    Route::get('/producto/{productoId}/proveedor/{proveedorId}', [ProveedorController::class, 'getInfo']);
+});
 

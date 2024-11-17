@@ -15,8 +15,6 @@ class InventarioController extends Controller
         $inventarios = Inventario::where('ESTADO_ACTIVO_INVENTARIO', '1')
             ->join('producto', 'inventario.ID_PRODUCTO', '=', 'producto.ID_PRODUCTO')
             ->paginate(10);
-        $usuario = Auth::user();
-        Log::info($usuario);
         return view('inventario.index', compact('inventarios'));
     }
 }

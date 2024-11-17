@@ -2,7 +2,7 @@
 @section('title', 'Dashboard')
 @section('page-content')
     <div class="main-content-inner">
-        <h1>¡Bienvenido Kevin Agreda!</h1>    
+        <h1>¡Bienvenido {{ Auth::user()->NOMBRE_USUARIO }} {{ Auth::user()->APELLIDO_USUARIO }}!</h1>
         <div class="row">
             <div class="col-xs-12 col-md-4 mt-5 mb-3">
                 <div class="card">

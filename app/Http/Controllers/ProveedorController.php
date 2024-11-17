@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\DetalleProveedor;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ProveedorController extends Controller
@@ -48,7 +49,7 @@ class ProveedorController extends Controller
 
         // Crear el proveedor 
         $data = $request->all();
-        $data['USUARIO_PROVEEDOR'] = "Mey";
+        $data['USUARIO_PROVEEDOR'] = Auth::user()->USER_USUARIO;
         $proveedor = Proveedor::create($data);
 
         // Asignar productos al proveedor en la tabla de detalle_proveedor
@@ -77,7 +78,7 @@ class ProveedorController extends Controller
                     'PRECIO_PROVEEDOR' => $producto['precio'],
                     'COSTO_PROVEEDOR' => $producto['costo'],
                     'PREFERIDO_PROVEEDOR' => $producto['preferido'],
-                    'USUARIO_DET_USUARIO' => "Mey", // Usuario actual o el valor correspondiente
+                    'USUARIO_DET_USUARIO' => Auth::user()->USER_USUARIO, // Usuario actual o el valor correspondiente
                 ]);
             }
         }
@@ -188,7 +189,7 @@ class ProveedorController extends Controller
                     'COSTO_PROVEEDOR' => $costos[$productoId] ?? 0,
                     'PRECIO_PROVEEDOR' => $precios[$productoId] ?? 0,
                     'PREFERIDO_PROVEEDOR' => $preferidos[$productoId] ?? 0,
-                    'USUARIO_DET_USUARIO' => "Mey"
+                    'USUARIO_DET_USUARIO' => Auth::user()->USER_USUARIO
                 ]
             );
         }

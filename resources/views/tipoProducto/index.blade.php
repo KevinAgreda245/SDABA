@@ -42,11 +42,13 @@
                                         <td>{{ $tipoProducto->DESCR_TIPO_PRODUCTO ?: 'No registra' }}</td>
                                         <td>
                                             <a href="{{ route('tipoProducto.edit', $tipoProducto->ID_TIPO_PRODUCTO) }}" class="btn btn-warning">Editar</a>
+                                            @if(Auth::user()->rol->DESCRIPCION_ROL == 'Administrador')
                                             <form action="{{ route('tipoProducto.destroy', $tipoProducto->ID_TIPO_PRODUCTO) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar el tipo de producto: {{ $tipoProducto->NOMBRE_TIPO_PRODUCTO }}? Esta acción no se puede deshacer.');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Eliminar</button>
                                             </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

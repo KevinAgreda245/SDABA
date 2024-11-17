@@ -14,9 +14,12 @@
                     </div>
                     <div class="col-6 clearfix">
                         <div class="user-profile pull-right">
-                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Kevin Agreda <i class="fa fa-angle-down"></i></h4>
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->USER_USUARIO }} <i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Cerrar sesión</a>
+                                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar sesión</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -44,11 +44,13 @@
                                             <a href="{{ route('proveedor.edit', $prov->ID_PROVEEDOR) }}" class="btn btn-warning">Editar</a>
                                             <a href="{{ route('proveedor.editAssign', $prov->ID_PROVEEDOR) }}" class="btn btn-dark">Asignar productos</a>
                                             <a href="{{ route('proveedor.show', $prov->ID_PROVEEDOR) }}" class="btn btn-primary">Ver productos</a>
+                                            @if(Auth::user()->rol->DESCRIPCION_ROL == 'Administrador')
                                             <form action="{{ route('proveedor.destroy', $prov->ID_PROVEEDOR) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar el proveedor: {{ $prov->NOMBRE_PROVEEDOR }}? Esta acción no se puede deshacer.');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Eliminar</button>
                                             </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

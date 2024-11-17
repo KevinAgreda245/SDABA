@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\TipoProducto;
 use App\Models\Producto;
 
@@ -54,7 +55,7 @@ class ProductoController extends Controller
             'DESCRIPCION_PRODUCTO' => $request->descripcion_producto,
             'MINIMO_PRODUCTO' => $request->minimo_producto,
             'ID_TIPO_PRODUCTO' => $request->id_tipo_producto,
-            'USUARIO_PRODUCTO' => "kevin agreda",
+            'USUARIO_PRODUCTO' => Auth::user()->USER_USUARIO,
         ]);
 
         // Redirigir a la lista de productos con mensaje de éxito

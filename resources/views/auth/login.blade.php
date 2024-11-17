@@ -11,20 +11,24 @@
                 @csrf <!-- Token CSRF necesario para formularios en Laravel -->
                 <div class="login-form-body">
                     <div class="form-gp">
-                        <label for="exampleInputEmail1">Nombre de Usuario:</label>
-                        <input type="email" id="exampleInputEmail1">
+                        <label for="user_usuario">Nombre de Usuario:</label>
+                        <input type="text" id="user_usuario" name="user_usuario" value="{{ old('user_usuario') }}" required>
                         <i class="ti-email"></i>
-                        <div class="text-danger"></div>
+                        @error('user_usuario')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-gp">
-                        <label for="exampleInputPassword1">Contraseña:</label>
-                        <input type="password" id="exampleInputPassword1">
+                        <label for="clave_usuario">Contraseña:</label>
+                        <input type="password" id="clave_usuario" name="clave_usuario" required>
                         <i class="ti-lock"></i>
-                        <div class="text-danger"></div>
+                        @error('clave_usuario')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="row mb-4 rmber-area">
                         <div class="col-12 text-right">
-                            <a href="#">Olvide mi contraseña</a>
+                            <a href="#">Olvidé mi contraseña</a>
                         </div>
                     </div>
                     <div class="submit-btn-area">

@@ -44,11 +44,13 @@
                                         <td>{{ $producto->MINIMO_PRODUCTO }}</td>
                                         <td>
                                             <a href="{{ route('producto.edit', $producto->ID_PRODUCTO) }}" class="btn btn-warning">Editar</a>
+                                            @if(Auth::user()->rol->DESCRIPCION_ROL == 'Administrador')
                                             <form action="{{ route('producto.destroy', $producto->ID_PRODUCTO) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar el producto: {{ $producto->NOMBRE_PRODUCTO }}? Esta acción no se puede deshacer.');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Eliminar</button>
                                             </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
