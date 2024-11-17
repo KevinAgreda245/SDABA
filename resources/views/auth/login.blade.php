@@ -26,11 +26,6 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="row mb-4 rmber-area">
-                        <div class="col-12 text-right">
-                            <a href="#">Olvidé mi contraseña</a>
-                        </div>
-                    </div>
                     <div class="submit-btn-area">
                         <button id="form_submit" type="submit">Entrar <i class="ti-arrow-right"></i></button>
                     </div>
