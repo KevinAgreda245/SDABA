@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(EstadoOrdenSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }
