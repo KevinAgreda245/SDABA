@@ -17,6 +17,9 @@ Route::resource('inventario', InventarioController::class);
 
 Route::resource('ordenProducto', OrdenProductoController::class);
 Route::get('/ordenProducto/{id}/imprimir', [OrdenProductoController::class, 'imprimir'])->name('ordenes.imprimir');
+Route::get('/ordenProducto/{id}/autorizar', [OrdenProductoController::class, 'autorizar'])->name('ordenProducto.autorizar');
+Route::get('/ordenProducto/{id}/denegar', [OrdenProductoController::class, 'denegar'])->name('ordenProducto.denegar');
+Route::get('/orden-producto/{id}/finalizar', [OrdenProductoController::class, 'finalizar'])->name('ordenProducto.finalizar');
 
 Route::resource('proveedor', ProveedorController::class);
 Route::get('/proveedor/{id}/editAssign', [ProveedorController::class, 'editAssign'])->name('proveedor.editAssign');

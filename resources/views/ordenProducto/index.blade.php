@@ -16,7 +16,7 @@
     <div class="mt-4">
         <h2>Órdenes Pendientes</h2>
         @if($ordenesPendientes->isEmpty())
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-info mt-2" role="alert">
                 <strong>Mensaje:</strong> No hay órdenes pendientes de procesar.
             </div>
         @else
@@ -49,10 +49,10 @@
                             <td>
                                 <a href="{{ route('ordenProducto.show', $orden->ID_ORDEN_COMPRA) }}" class="btn btn-primary btn-sm">Ver detalle</a>
                                 @if($orden->ID_ESTADO_ORDEN == 1)
-                                    <a href="{{ route('ordenProducto.show', $orden->ID_ORDEN_COMPRA) }}" class="btn btn-success btn-sm">Autorizar</a>
-                                    <a href="{{ route('ordenProducto.show', $orden->ID_ORDEN_COMPRA) }}" class="btn btn-danger btn-sm">Denegar</a>
+                                    <a href="#" onclick="confirmAction('{{ route('ordenProducto.autorizar', $orden->ID_ORDEN_COMPRA) }}')" class="btn btn-success btn-sm">Autorizar</a>
+                                    <a href="#" onclick="confirmAction('{{ route('ordenProducto.denegar', $orden->ID_ORDEN_COMPRA) }}')" class="btn btn-danger btn-sm">Denegar</a>
                                 @elseif($orden->ID_ESTADO_ORDEN == 2)
-                                    <a href="{{ route('ordenProducto.show', $orden->ID_ORDEN_COMPRA) }}" class="btn btn-dark btn-sm">Finalizar</a>
+                                    <a href="#" onclick="confirmFinish('{{ route('ordenProducto.finalizar', $orden->ID_ORDEN_COMPRA) }}')" class="btn btn-dark btn-sm">Finalizar</a>
                                 @endif
                             </td>
                         </tr>
@@ -66,7 +66,7 @@
     <div class="mt-4">
         <h2>Órdenes Finalizadas/Denegadas</h2>
         @if($ordenesProcesadas->isEmpty())
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-info  mt-2" role="alert">
                 <strong>Mensaje:</strong> No hay órdenes procesadas o denegadas.
             </div>
         @else
@@ -116,5 +116,17 @@
         initTable('#tbl-pendientes');
         initTable('#tbl-procesadas');
     });
+
+    function confirmAction(url) {
+        if (confirm('¿Estás seguro de que deseas autorizar o denegar esta orden?')) {
+            window.location.href = url;  // Redirige a la ruta de autorizar o denegar
+        }
+    }
+
+    function confirmFinish(url) {
+        if (confirm('¿Estás seguro de que deseas finalizar esta orden?')) {
+            window.location.href = url;  // Redirige a la ruta de autorizar o denegar
+        }
+    }
 </script>
 @endsection

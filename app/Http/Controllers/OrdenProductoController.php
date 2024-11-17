@@ -11,6 +11,7 @@ use App\Models\OrdenCompra;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class OrdenProductoController extends Controller
 {
@@ -126,4 +127,67 @@ class OrdenProductoController extends Controller
     // Retornar el PDF como descarga o para mostrarlo
     return $pdf->stream('Orden_Compra_' . str_pad($orden->ID_ORDEN_COMPRA, 5, '0', STR_PAD_LEFT) . '.pdf');
 }
+
+// Autorizar la orden
+public function autorizar($id)
+{
+    $orden = OrdenCompra::findOrFail($id);
+    $orden->ID_ESTADO_ORDEN = 2; // Cambia el estado a "Autorizada"
+    $orden->save();
+
+    return redirect()->route('ordenProducto.index')->with('success', 'Orden autorizada correctamente.');
+}
+
+// Denegar la orden
+public function denegar($id)
+{
+    $orden = OrdenCompra::findOrFail($id);
+    $orden->ID_ESTADO_ORDEN = 3; // Cambia el estado a "Denegada"
+    $orden->save();
+
+    return redirect()->route('ordenProducto.index')->with('error', 'Orden denegada correctamente.');
+}
+
+public function finalizar($id)
+    {
+        // Obtener la orden de compra
+        $orden = OrdenCompra::findOrFail($id);
+        
+        // Cambiar el estado de la orden a "Finalizada"
+        $orden->ID_ESTADO_ORDEN = 4; // Estado de finalizada
+        // Asignar la fecha de hoy como fecha de entrega
+        $orden->FECHA_ENTREGA = Carbon::today(); // Solo la fecha (sin hora)
+        $orden->save();
+
+        // Recorrer los productos de la orden de compra y actualizar el inventario
+        foreach ($orden->detalles as $producto) {
+            // Buscar el inventario del producto
+            $inventario = Inventario::where('id_producto', $producto->ID_PRODUCTO)->first();
+
+            // Si el producto no tiene inventario, lo creamos
+            if (!$inventario) {
+                $inventario = new Inventario();
+                $inventario->ID_PRODUCTO = $producto->ID_PRODUCTO;
+                $inventario->CANTIDAD_INVENTARIO = 0;
+                $inventario->PRECIO_INVENTARIO = $producto->PRECIO_PRODUCTO;
+                $inventario->COSTO_INVENTARIO = $producto->COSTO_PRODUCTO;
+            }
+
+            // Aumentar la cantidad de inventario
+            $inventario->CANTIDAD_INVENTARIO += $producto->CANTIDAD_PRODUCTO;
+
+            // Calcular el costo promedio
+            $totalCosto = ($inventario->COSTO_INVENTARIO * $inventario->CANTIDAD_INVENTARIO) + ($producto->COSTO_PRODUCTO * $producto->CANTIDAD_PRODUCTO);
+            $totalCantidad = $inventario->CANTIDAD_INVENTARIO + $producto->CANTIDAD_PRODUCTO;
+            $inventario->COSTO_INVENTARIO = $totalCosto / $totalCantidad;
+
+            // Actualizar el precio del inventario con el precio de la orden
+            $inventario->PRECIO_INVENTARIO = $producto->PRECIO_PRODUCTO;
+
+            // Guardar los cambios en el inventario
+            $inventario->save();
+        }
+
+        return redirect()->route('ordenProducto.index')->with('success', 'Orden finalizada y inventario actualizado correctamente.');
+    }
 }

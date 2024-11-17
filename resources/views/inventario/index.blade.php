@@ -24,7 +24,7 @@
                     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
                             <h4 class="mb-3">{{ $inventario->producto->NOMBRE_PRODUCTO }}</h4>
-                            <small>{{ $inventario->created_at->format('d/m/Y h:i A') }}</small>
+                            <small>{{ $inventario->updated_at->format('d/m/Y h:i A') }}</small>
                         </div>
                         <p class="mb-1"><span class="badge {{ $inventario->CANTIDAD_INVENTARIO < $inventario->producto->MINIMO_PRODUCTO ? 'badge-danger' : 'badge-primary' }} p-2"><b>Cantidad en existencia:</b> <span class="badge badge-light">{{ $inventario->CANTIDAD_INVENTARIO }}</span></span></p>
                     </a>
