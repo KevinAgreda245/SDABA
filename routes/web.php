@@ -40,5 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reportes/generar', [ReporteController::class, 'generarReporte'])->name('reporte.generar');
 
     Route::resource('usuario', UsuarioController::class); 
+    Route::get('usuario/{usuario}/password', [UsuarioController::class, 'editPassword'])->name('usuario.password.edit');
+    Route::put('usuario/{usuario}/password', [UsuarioController::class, 'updatePassword'])->name('usuario.password.update');
 });
 

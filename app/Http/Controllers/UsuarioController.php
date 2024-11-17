@@ -56,24 +56,25 @@ class UsuarioController extends Controller
     // Actualizar un usuario
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'NOMBRE_USUARIO' => 'required|string|max:255',
-            'APELLIDO_USUARIO' => 'required|string|max:255',
-            'USER_USUARIO' => 'required|string|max:255|unique:usuarios,USER_USUARIO,' . $id, // Excluir el usuario actual de la validación de unicidad
-            'CLAVE_USUARIO' => 'nullable|string|min:6|confirmed',
-            'ID_ROL' => 'required|exists:roles,ID_ROL',
-        ]);
+        // Validar los datos enviados
+    $request->validate([
+        'NOMBRE_USUARIO' => 'required|string|max:255',
+        'APELLIDO_USUARIO' => 'required|string|max:255',
+        'ID_ROL' => 'required|exists:rol,ID_ROL',
+    ]);
 
-        $usuario = User::findOrFail($id);
-        $usuario->update([
-            'NOMBRE_USUARIO' => $request->NOMBRE_USUARIO,
-            'APELLIDO_USUARIO' => $request->APELLIDO_USUARIO,
-            'USER_USUARIO' => $request->USER_USUARIO,
-            'CLAVE_USUARIO' => $request->CLAVE_USUARIO ? Hash::make($request->CLAVE_USUARIO) : $usuario->CLAVE_USUARIO,
-            'ID_ROL' => $request->ID_ROL,
-        ]);
+    // Buscar el usuario por ID
+    $usuario = User::findOrFail($id);
 
-        return redirect()->route('usuario.index')->with('success', 'Usuario actualizado exitosamente.');
+    // Actualizar los campos
+    $usuario->NOMBRE_USUARIO = $request->input('NOMBRE_USUARIO');
+    $usuario->APELLIDO_USUARIO = $request->input('APELLIDO_USUARIO');
+    $usuario->ID_ROL = $request->input('ID_ROL');
+    $usuario->save();
+
+    // Redireccionar con mensaje de éxito
+    return redirect()->route('usuario.index')
+        ->with('success', 'Usuario actualizado correctamente.');
     }
 
     // Eliminar un usuario
@@ -84,6 +85,25 @@ class UsuarioController extends Controller
 
         return redirect()->route('usuario.index')->with('success', 'Usuario eliminado exitosamente.');
     }
+
+    public function editPassword($id)
+{
+    $usuario = User::findOrFail($id);
+    return view('usuario.editPass', compact('usuario'));
+}
+
+public function updatePassword(Request $request, $id)
+{
+    $request->validate([
+        'password' => 'required|string|min:8|confirmed',
+    ]);
+
+    $usuario = User::findOrFail($id);
+    $usuario->CLAVE_USUARIO = bcrypt($request->password); // Encripta la nueva contraseña
+    $usuario->save();
+
+    return redirect()->route('usuario.index')->with('success', 'Contraseña actualizada con éxito.');
+}
 
 }
 

@@ -51,8 +51,10 @@
                                         <td>{{ $usuario->USER_USUARIO }}</td>
                                         <td>{{ $usuario->rol->DESCRIPCION_ROL }}</td>
                                         <td>
-                                            <a href="{{ route('usuario.edit', $usuario->ID_USUARIO) }}" class="btn btn-warning">Editar</a>
-
+                                            @if($usuario->USER_USUARIO != 'admin') 
+                                                <a href="{{ route('usuario.edit', $usuario->ID_USUARIO) }}" class="btn btn-warning">Editar</a>
+                                            @endif
+                                            <a href="{{ route('usuario.password.edit', $usuario->ID_USUARIO) }}" class="btn btn-info">Cambiar Contraseña</a>
                                             @if(Auth::user()->rol->DESCRIPCION_ROL == 'Administrador' && Auth::user()->ID_USUARIO != $usuario->ID_USUARIO && $usuario->USER_USUARIO != 'admin')
                                                 <form action="{{ route('usuario.destroy', $usuario->ID_USUARIO) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar al usuario: {{ $usuario->USER_USUARIO }}? Esta acción no se puede deshacer.');">
                                                     @csrf
