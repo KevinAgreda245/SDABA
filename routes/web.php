@@ -8,6 +8,7 @@ use App\Http\Controllers\OrdenProductoController;
 use App\Http\Controllers\TipoProductoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\UsuarioController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -34,6 +35,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('producto', ProductoController::class);
     Route::get('/producto/{productoId}/proveedor/{proveedorId}', [ProveedorController::class, 'getInfo']);
+
+    Route::get('/reportes', [ReporteController::class, 'index'])->name('reporte.index');
+    Route::get('/reportes/generar', [ReporteController::class, 'generarReporte'])->name('reporte.generar');
+
     Route::resource('usuario', UsuarioController::class); 
 });
 

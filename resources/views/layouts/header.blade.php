@@ -18,6 +18,7 @@
                     <li class="{{ request()->is('producto*') ? 'active' : '' }}"><a href="{{ route('producto.index') }}"><i class="ti-package"></i> <span>Producto</span></a></li>
                     @endif
                     @if(Auth::user()->rol->DESCRIPCION_ROL == 'Administrador')
+                    <li class="{{ request()->is('reporte*') ? 'active' : '' }}"><a href="{{ route('reporte.index') }}"><i class="ti-clipboard"></i> <span>Reporte</span></a></li>
                     <li class="{{ request()->is('tipoProducto*') ? 'active' : '' }}"><a href="{{ route('tipoProducto.index') }}"><i class="ti-notepad"></i> <span>Tipo de Producto</span></a></li>
                     <li class="{{ request()->is('usuario*') ? 'active' : '' }}"><a href="{{ route('usuario.index') }}"><i class="ti-user"></i> <span>Usuario</span></a></li>
                     @endif
